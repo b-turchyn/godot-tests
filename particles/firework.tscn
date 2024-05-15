@@ -1,0 +1,124 @@
+[gd_scene load_steps=11 format=3 uid="uid://hiqabpb32w6v"]
+
+[ext_resource type="Material" uid="uid://bese4a4adg8v3" path="res://particles/sparkles.tres" id="1_te7kg"]
+
+[sub_resource type="Curve" id="Curve_orq8a"]
+_data = [Vector2(0, 1), 0.0, 0.0156985, 0, 0, Vector2(0.626667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.2967, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2kthm"]
+curve = SubResource("Curve_orq8a")
+
+[sub_resource type="Curve" id="Curve_4ybd6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.253333, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_c0rn0"]
+curve = SubResource("Curve_4ybd6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3p8cl"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 98, 0)
+damping_min = 82.022
+damping_max = 82.022
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_c0rn0")
+color = Color(1, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_2kthm")
+hue_variation_max = 0.15
+sub_emitter_mode = 1
+sub_emitter_frequency = 46.2
+
+[sub_resource type="Curve" id="Curve_r6qqj"]
+_data = [Vector2(0, 1), 0.0, -1.92308, 0, 0, Vector2(1, 0.285714), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rib43"]
+curve = SubResource("Curve_r6qqj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0k5m0"]
+lifetime_randomness = 0.46
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 5.0
+flatness = 0.056
+initial_velocity_min = 180.0
+initial_velocity_max = 180.0
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_rib43")
+turbulence_noise_strength = 0.5
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 32
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y676i"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+sub_emitter = NodePath("../Sparkles")
+process_material = SubResource("ParticleProcessMaterial_3p8cl")
+one_shot = true
+trail_enabled = true
+trail_lifetime = 0.1
+trail_section_subdivisions = 8
+
+[node name="Sparkles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = ExtResource("1_te7kg")
+lifetime = 0.5
+one_shot = true
+trail_lifetime = 0.1
+trail_section_subdivisions = 8
+
+[node name="InitialLaunch" type="GPUParticles2D" parent="."]
+amount = 100
+amount_ratio = 0.04
+sub_emitter = NodePath("../GPUParticles2D")
+process_material = SubResource("ParticleProcessMaterial_0k5m0")
+lifetime = 1.8
+explosiveness = 0.5
+fixed_fps = 60
+
+[node name="Charge" type="GPUParticles2D" parent="InitialLaunch"]
+visible = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_y676i")
+lifetime = 3.0
+explosiveness = 0.95
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, -113)
+zoom = Vector2(3, 3)
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Control" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Background/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

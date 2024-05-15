@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://mwv0xd5top64"]
+
+[ext_resource type="Texture2D" uid="uid://qgpnq371sl8x" path="res://icon.svg" id="1_0cpae"]
+[ext_resource type="Script" path="res://level.gd" id="1_tmo82"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfb1a"]
+size = Vector2(130, 130)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_tmo82")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+scale = Vector2(0.5, 0.5)
+motion_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_gfb1a")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_0cpae")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="NavTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
