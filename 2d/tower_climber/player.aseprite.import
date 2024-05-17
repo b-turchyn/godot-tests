@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bkgbqpa4xarbs"
+path="res://.godot/imported/player.aseprite-37286bcd8d4cb7e8ccc7347a39231f5b.res"
+
+[deps]
+
+source_file="res://2d/tower_climber/player.aseprite"
+dest_files=["res://.godot/imported/player.aseprite-37286bcd8d4cb7e8ccc7347a39231f5b.res"]
+
+[params]
+

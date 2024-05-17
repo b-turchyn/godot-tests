@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://d4a546s7cj8e2"]
+
+[ext_resource type="Shader" path="res://2d/tower_climber/glow.gdshader" id="1_jb36o"]
+[ext_resource type="Texture2D" uid="uid://clxfn8is2vswh" path="res://2d/tower_climber/player.png" id="1_pi435"]
+[ext_resource type="Script" path="res://2d/tower_climber/player.gd" id="2_35xky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kl5id"]
+shader = ExtResource("1_jb36o")
+shader_parameter/color1 = Color(0.105882, 0.196078, 0.729412, 1)
+shader_parameter/color2 = Color(0.105882, 0.196078, 0.729412, 1)
+shader_parameter/threshold = 0.5
+shader_parameter/intensity = 1.0
+shader_parameter/opacity = 0.5
+shader_parameter/glow_color = Color(0.262745, 0.419608, 0.956863, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ku4kl"]
+atlas = ExtResource("1_pi435")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o5v0"]
+atlas = ExtResource("1_pi435")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bthdj"]
+atlas = ExtResource("1_pi435")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e5pm"]
+atlas = ExtResource("1_pi435")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lxcyi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ku4kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1o5v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bthdj")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ku4kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6e5pm")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fi5mv"]
+size = Vector2(24, 24)
+
+[node name="Player" type="CharacterBody2D"]
+material = SubResource("ShaderMaterial_kl5id")
+script = ExtResource("2_35xky")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+use_parent_material = true
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_lxcyi")
+animation = &"Idle"
+autoplay = "Idle"
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://2d/tower_climber",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://2d/tower_climber/player.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "fdba8857e8339773ac5de6a68b3d8516"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_fi5mv")
+metadata/_edit_group_ = true
+
+[node name="CoyoteTime" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dc6xnlr8ctbby"
+path="res://.godot/imported/grid.aseprite-7f78bd01124eb76962ff325b7bb98b20.res"
+
+[deps]
+
+source_file="res://2d/tower_climber/grid.aseprite"
+dest_files=["res://.godot/imported/grid.aseprite-7f78bd01124eb76962ff325b7bb98b20.res"]
+
+[params]
+
